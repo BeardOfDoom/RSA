@@ -11,8 +11,7 @@
 
     1:  
     EOR X4, X1, \size
-    TST X4, X4
-    B.EQ    2f
+    CBZ X4, 2f
 
         LDR X2, [\minuendAddress,   X1]
         LDR X3, [\subtrahendAddress,   X1]

@@ -24,10 +24,9 @@
 
     STR X2, [\resultAddress]
 
-    3:  
+    1:  
     EOR X5, X1, \size
-    TST X5, X5
-    B.EQ    4f
+    CBZ X5, 2f
 
         LDR X2, [\resultAddress,   X1]
         LDR X3, [\modulusAddress,   X1]
@@ -39,6 +38,6 @@
             
         ADD X1, X1, #8
 
-    B   3b
-    4:
+    B   1b
+    2:
 .endmacro
