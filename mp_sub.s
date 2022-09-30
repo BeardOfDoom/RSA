@@ -1,4 +1,4 @@
-// Assuming that size is bigger than the modulus's most significant bit and is divisible with 64.
+// Assuming that size is bigger than the modulus's most significant bit and is divisible with 8.
 .MACRO  mp_sub  resultAddress,  minuendAddress, subtrahendAddress,  size
     MOV X1, #8
 
