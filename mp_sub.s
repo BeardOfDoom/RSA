@@ -1,11 +1,11 @@
 // Assuming that size is bigger than the modulus's most significant bit and is divisible with 64.
-.MACRO  mp_add  resultAddress,  addend1Address, addend2Address, modulusAddress, size
+.MACRO  mp_sub  resultAddress,  minuendAddress, subtrahendAddress,  size
     MOV X1, #64
 
-    LDR X2, [\addend1Address]
-    LDR X3, [\addend2Address]
+    LDR X2, [\minuendAddress]
+    LDR X3, [\subtrahendAddress]
 
-    ADDS    X2, X2, X3
+    SUBS    X2, X2, X3
 
     STR X2, [\resultAddress]
 
@@ -13,9 +13,9 @@
     TEQ X1, \size
     B.EQ    2f
 
-        LDR X2, [\addend1Address,   X1]
-        LDR X3, [\addend2Address,   X1]
-        ADCS    X2, X2, X3
+        LDR X2, [\minuendAddress,   X1]
+        LDR X3, [\subtrahendAddress,   X1]
+        SBCS    X2, X2, X3
 
         STR X2, [\resultAddress,    X1]
             
