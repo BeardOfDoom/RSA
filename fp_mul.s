@@ -116,7 +116,3 @@
     LDP X21,    X22,    [SP],   #16
     LDP X19,    X20,    [SP],   #16
 .endmacro
-
-
-testStrMul:
-    .asciz "mul %ld %ld\n%ld %ld\n"

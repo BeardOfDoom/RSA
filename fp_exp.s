@@ -83,15 +83,3 @@
     LDP X19,    X20,    [SP],   #16
 
 .endmacro
-
-testStrExp1:
-    .asciz "Exp1 %ld %ld\n"
-
-    testStrExp2:
-    .asciz "Exp2 %ld %ld\n"
-
-    testStrExp3:
-    .asciz "Exp3 %ld %ld\n"
-
-    testStrExp4:
-    .asciz "Exp4 %ld %ld\n"
