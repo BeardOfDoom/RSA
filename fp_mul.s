@@ -1,4 +1,5 @@
 .include "fp_add.s"
+.align 4
 
 // Implementing the double-and-add method for modular multiplication.
 .MACRO  fp_mul  resultAddress,  multiplicandAddress, multiplierAddress, modulusAddress, size
@@ -36,11 +37,28 @@
 
     B   1b
     2:
+    MOV X20,    SP
 
-    MOV X24,    SP
-    
+    // Create a copy of the multiplier
+    SUB SP, SP, X23
+    MOV X1, #0
+    1:
+    EOR X4, X1, X23
+    CBZ X4, 2f
+
+        LDR X2, [X21,   X1]
+
+        STR X2, [SP,    X1]
+            
+        ADD X1, X1, #8
+
+    B   1b
+    2:
+    MOV X21,    SP
+
     // Start the double-and-add method
     MOV X26, #0
+    MOV X24, #0
 
     3:
     EOR X4, X26, X23
@@ -54,13 +72,31 @@
         LSR X25, X25, #1
         B.EQ    6f
 
+            CBNZ    X24,    7f
+
+            MOV X5, #0
+            MOV X0, #0
+            1:
+            EOR X4, X5, X23
+            CBZ X4, 2f
+
+                STR X0, [X19,   X5]
+                    
+                ADD X5, X5, #8
+
+            B   1b
+            2:
+
+            MOV X24,    #1
+
+            7:
             // Add the current base
-            fp_add  X19,    X19,    X24,    X22,    X23
+            fp_add  X19,    X19,    X20,    X22,    X23
 
         6:
 
         // Double the base
-        fp_add  X24,    X24,    X24,    X22,    X23
+        fp_add  X20,    X20,    X20,    X22,    X23
 
         ADD X27, X27, #1
 
@@ -73,6 +109,7 @@
     4:
 
     ADD SP, SP, X23
+    ADD SP, SP, X23
     LDR X27,    [SP],   #16
     LDP X25,    X26,    [SP],   #16
     LDP X23,    X24,    [SP],   #16
@@ -81,5 +118,5 @@
 .endmacro
 
 
-testStr:
-    .asciz "test %ld %ld\n"
+testStrMul:
+    .asciz "mul %ld %ld\n%ld %ld\n"
