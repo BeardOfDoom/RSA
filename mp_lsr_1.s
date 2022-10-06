@@ -10,7 +10,7 @@
     LDR X2, [\inputAddress,    X1]
     
     TST X2, #1
-    LSR X2, X2, #1
+    ASR X2, X2, #1
 
     STR X2, [\inputAddress,   X1]
 
