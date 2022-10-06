@@ -1,6 +1,12 @@
 .include "mp_lsr_1.s"
-.include "mp_add.s"
-.include "mp_sub.s"
+.ifndef _mp_add
+    _mp_add:
+    .include "mp_add.s"
+.endif
+.ifndef _mp_sub
+    _mp_sub:
+    .include "mp_sub.s"
+.endif
 .include "mp_cmp.s"
 .include "mp_is_zero.s"
 

@@ -1,23 +1,23 @@
 // Assuming the multiplier and multiplicand is size/2 long at most.
 .MACRO  mp_mul  resultAddress,  multiplicandAddress,    multiplierAddress,  size
 
-MOV X1, \resultAddress
-MOV X2, \multiplicandAddress
-MOV X3, \multiplierAddress
-MOV X4, \size
+    MOV X1, \resultAddress
+    MOV X2, \multiplicandAddress
+    MOV X3, \multiplierAddress
+    MOV X4, \size
 
-STP X19,    X20,    [SP,    -16]!
-STP X21,    X22,    [SP,    -16]!
+    STP X19,    X20,    [SP,    -16]!
+    STP X21,    X22,    [SP,    -16]!
 
-MOV X19,    X1  // Result
-MOV X20,    X2  // Multiplicand
-MOV X21,    X3  // Multiplier
-MOV X22,    X4  // Size
+    MOV X19,    X1  // Result
+    MOV X20,    X2  // Multiplicand
+    MOV X21,    X3  // Multiplier
+    MOV X22,    X4  // Size
 
-// Divide Size with 2
-LSR X22,    X22,    #1
+    // Divide Size with 2
+    LSR X22,    X22,    #1
 
-// Setup Result
+    // Setup Result
     MOV X4, #0
     MOV X5, #0
     1:
@@ -26,15 +26,15 @@ LSR X22,    X22,    #1
 
         STR X5, [X19,    X4]
             
-        ADD X4, X4, #8
+    ADD X4, X4, #8
 
     B   1b
     2:
 
-MOV X4, 0   // Iterator for multiplier
-MOV X5, 0   // Iterator for multiplicand
+    MOV X4, 0   // Iterator for multiplier
+    MOV X5, 0   // Iterator for multiplicand
 
-1:  
+    1:  
     EOR X1, X4, X22
     CBZ X1, 2f
 
@@ -70,6 +70,6 @@ MOV X5, 0   // Iterator for multiplicand
     2:
 
     LDP X21,    X22,    [SP],   16
-    LDP X20,    X19,    [SP],   16
+    LDP X19,    X20,    [SP],   16
 
 .endmacro

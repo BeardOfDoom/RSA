@@ -1,6 +1,13 @@
 // Assuming that size is bigger than the modulus's most significant bit and is divisible with 8.
-.include "mp_add.s"
-.include "mp_sub.s"
+.ifndef _mp_add
+    _mp_add:
+    .include "mp_add.s"
+.endif
+
+.ifndef _mp_sub
+    _mp_sub:
+    .include "mp_sub.s"
+.endif
 
 .MACRO  fp_add  resultAddress,  addend1Address, addend2Address, modulusAddress, size
 
